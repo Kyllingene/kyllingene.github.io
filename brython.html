@@ -13,7 +13,7 @@
     <input type="text" id="string" name="input" placeholder="String Here"><br>
     <input type="text" id="key" name="input" placeholder="Key Here"><br>
     <button id="enter">Convert</button>
-    
+    <div id="output">Output goes here</div>
     
     
     <script type="text/python">
@@ -32,7 +32,6 @@
         result = b5.fullencrypt(key,string)
         o.text = result
       
-      o.text = "Output goes here"
       e.bind("click",encrypt)
     </script>
   </body>
