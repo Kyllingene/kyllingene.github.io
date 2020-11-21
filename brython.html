@@ -1,40 +1,39 @@
 <html>
 
   <head>
-      <style>
-        * {
-         text-align: center 
-        }
-      </style>
+      <link rel="stylesheet" href="/styles.css?">
     
       <meta charset="utf-8">
       <script type="text/javascript"
-          src="https://cdn.jsdelivr.net/npm/brython@3.9.0/brython.min.js">
+          src="/brython/brython.js">
       </script>
   </head>
 
   <body onload="brython()">
-    <input type="text" id="input" name="input" text="Text"><br>
-    <button id="enter">Enter</button>
+    <input type="text" id="string" name="input" placeholder="String Here"><br>
+    <input type="text" id="key" name="input" placeholder="Key Here"><br>
+    <button id="enter">Convert</button>
     
-    <p id="output">Hello!</p>
+    
     
     <script type="text/python">
       from browser import document, html
-      from pydoc import help as get_help
+      import binary5bit as b5
       
-      i = document['input']
+      s = document['string']
+      s = document['key']
       e = document['enter']
       o = document['output']
       
-      def show(event):
-        text = i.value
-        o.text = text
+      def encrypt(event):
+        string = s.value
+        key = s.value
         
-        print(get_help(i))
+        result = b5.fullencrypt(key,string)
+        o.text = result
       
-      o.text = "Empty"
-      e.bind("click",show)
+      o.text = "Output goes here"
+      e.bind("click",encrypt)
     </script>
   </body>
 
