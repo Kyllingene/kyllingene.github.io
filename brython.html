@@ -44,13 +44,13 @@
           self.other = self.y + p_size[1]
 
         def move(direction):
-            if direction and self.other < 590:
-              self.y += direction
+          if direction and self.other < 590:
+            self.y += direction
 
-            elif (not direction) and (self.y > 10):
-              self.y += direction
+          elif (not direction) and (self.y > 10):
+            self.y += direction
 
-            self.other = self.y + p_size[1]
+          self.other = self.y + p_size[1]
 
         def contact(obj):
           if self.side:
