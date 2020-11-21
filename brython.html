@@ -1,6 +1,12 @@
 <html>
 
   <head>
+      <style>
+        * {
+         text-align: center 
+        }
+      </style>
+    
       <meta charset="utf-8">
       <script type="text/javascript"
           src="https://cdn.jsdelivr.net/npm/brython@3.9.0/brython.min.js">
@@ -8,14 +14,15 @@
   </head>
 
   <body onload="brython()">
-    <p id="test">Hello!</p>
+    <input type="text" id="input" name="input">
+    
+    <p id="output">Hello!</p>
     
     <script type="text/python">
-      from browser import document
+      from browser import document, html
       
-      i = document["test"]
-      
-      document <= i
+      o = document['output']
+      o.text = "Goodbye!"
     </script>
   </body>
 
