@@ -15,14 +15,26 @@
 
   <body onload="brython()">
     <input type="text" id="input" name="input">
+    <input type="button" id="input" name="enter">
     
     <p id="output">Hello!</p>
     
     <script type="text/python">
       from browser import document, html
       
+      i = document['input']
+      e = document['enter']
       o = document['output']
-      o.text = "Goodbye!"
+      
+      def show(event):
+        text = i.text
+        o.text = text
+        
+        i.text = ""
+      
+      o.text = "Empty"
+      
+      e.bind("click",show)
     </script>
   </body>
 
