@@ -35,14 +35,14 @@
     class Paddle:
       def __init__(self, side):
           self.y = 300
-            if side:
-              self.x = 750
-            else:
-              self.x = 50
+          if side:
+            self.x = 750
+          else:
+            self.x = 50
 
-            self.side = side
+          self.side = side
 
-            self.other = self.y + p_size[1]
+          self.other = self.y + p_size[1]
 
       def move(direction):
           if direction and self.other < 590:
@@ -53,14 +53,14 @@
 
             self.other = self.y + p_size[1]
 
-        def contact(obj):
-          if self.side:
-              obj['x'] -= 3
-            else:
-              obj['x'] += 3
+      def contact(obj):
+        if self.side:
+            obj['x'] -= 3
+          else:
+            obj['x'] += 3
 
-            obj['velocity'][0] = 0 - obj['velocity'][0]
-            obj['velocity'][1] += random() + random()
+          obj['velocity'][0] = 0 - obj['velocity'][0]
+          obj['velocity'][1] += random() + random()
 
     ball = {"velocity":(3,0),"x":400,"y":300}
 
