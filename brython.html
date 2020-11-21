@@ -18,21 +18,9 @@
     
     <script type="text/python">
       from browser import document, html
-      import binary5bit as b5
+      import pygame
       
-      s = document['string']
-      s = document['key']
-      e = document['enter']
-      o = document['output']
-      
-      def encrypt(event):
-        string = s.value
-        key = s.value
-        
-        result = b5.fullencrypt(key,string)
-        o.text = result
-      
-      e.bind("click",encrypt)
+      print(pygame)
     </script>
   </body>
 
