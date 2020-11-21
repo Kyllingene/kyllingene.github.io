@@ -27,8 +27,8 @@
       o = document['output']
       
       def show(event):
-        text = i.text
-        o.text = value
+        text = i.value
+        o.text = text
       
       o.text = "Empty"
       e.bind("click",show)
