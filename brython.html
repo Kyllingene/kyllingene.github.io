@@ -8,10 +8,14 @@
   </head>
 
   <body onload="brython()">
+    <p id="test">Hello!</p>
+    
     <script type="text/python">
       from browser import document
       
-      document <= document + "Hello !"
+      i = document["test"]
+      
+      document <= i
     </script>
   </body>
 
