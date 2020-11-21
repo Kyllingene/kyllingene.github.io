@@ -5,23 +5,149 @@
     
       <meta charset="utf-8">
       <script type="text/javascript"
-          src="/brython/brython.js">
+      src="https://brython.info/src/brython.js">
       </script>
   </head>
 
-  <body onload="brython()">
-    <input type="text" id="string" name="input" placeholder="String Here"><br>
-    <input type="text" id="key" name="input" placeholder="Key Here"><br>
-    <button id="enter">Convert</button>
-    <div id="output">Output goes here</div>
-    
-    <script src="/pygame.brython.js"></script>
-    <script type="text/python">
-      from browser import document, html
-      import pygame
-      
-      print(pygame)
-    </script>
-  </body>
+<body onload="brython()">
+  <div id="score">0 - 0</div>
+  <canvas id="stage" width="800" height="600" style="width: 100%"></canvas>
+
+  <script type="text/python">
+
+    #Imports
+    from browser import document as doc
+    from random import random
+    from time import sleep
+
+    #Setting up stage
+    canvas = doc["stage"]
+    pane = canvas.getContext("2d")
+
+    pane.fillStyle = "black"
+
+    score_pane = document['score']
+
+    #Functions & Classes
+    def clear():
+        pane.clearRect(0,0,canvas.width,canvas.height)
+
+    class Paddle:
+      def __init__(self, side):
+          self.y = 300
+            if side:
+              self.x = 750
+            else:
+              self.x = 50
+
+            self.side = side
+
+            self.other = self.y + p_size[1]
+
+      def move(direction):
+          if direction and self.other < 590:
+              self.y += direction
+
+          elif (not direction) and (self.y > 10):
+              self.y += direction
+
+            self.other = self.y + p_size[1]
+
+        def contact(obj):
+          if self.side:
+              obj['x'] -= 3
+            else:
+              obj['x'] += 3
+
+            obj['velocity'][0] = 0 - obj['velocity'][0]
+            obj['velocity'][1] += random() + random()
+
+    ball = {"velocity":(3,0),"x":400,"y":300}
+
+    left = Paddle(0)
+    right = Paddle(1)
+
+    score = (0,0)
+
+    def keyCode(ev):
+        key = ev.keyCode
+
+        if key == 38:
+          right.move(2)
+
+      elif key == 40:
+          right.move(-2)
+
+        elif key == 87:
+          left.move(2)
+
+        elif key == 83:
+          left.move(-2)
+
+    p_size = (3,100)
+    b_size = 30
+
+    def draw():
+      #right
+        pane.fillRect(right.x,right.y,*p_size)
+        pane.fill()
+
+        #left
+        pane.fillRect(left.x,left.y,*p_size)
+        pane.fill()
+
+        #ball
+      pane.fillRect(ball['x'],ball['y'],b_size,b_size)
+        pane.fill()
+
+    def show_score(score):
+      score_pane.text = f"{score[0]} - {score[1]}"
+
+    def bounce():
+      if right.y < ball['y'] < right.other:
+          if ball['x'] == right.x:
+              right.collide(ball)
+
+        elif left.y < ball['y'] < left.other:
+          if ball['x'] == left.x:
+              left.collide(ball)
+
+        if ball['y'] > 590 or ball['y'] < 10:
+          obj['velocity'][1] = 0 - obj['velocity'][1]
+
+    document["keyCodeKeydown"].bind("keydown", keyCode)
+
+    #Game Loop
+    while True:
+      sleep(0.01)
+        clear()
+
+        ball['x'] += ball['velocity'][0]
+        ball['y'] += ball['velocity'][1]
+
+        bounce()
+        draw()
+
+        if ball['x'] < 10:
+          score[1] += 1
+            ball = {"velocity":(-3,0),"x":400,"y":300}
+
+            left.y = 300
+            right.y = 300
+
+        elif ball['x'] > 790:
+        score[0] += 1
+            ball = {"velocity":(3,0),"x":400,"y":300}
+
+            left.y = 300
+            right.y = 300
+
+        show_score(score)  
+
+
+  </script>
+
+
+</body>
 
 </html>
