@@ -14,8 +14,8 @@
   </head>
 
   <body onload="brython()">
-    <input type="text" id="input" name="input">
-    <input type="button" id="input" name="enter">
+    <input type="text" id="input" name="input">Enter Text Here!</input>
+    <input type="button" id="input" name="enter">Enter</input>
     
     <p id="output">Hello!</p>
     
@@ -33,6 +33,7 @@
         i.text = ""
       
       o.text = "Empty"
+      o.set("Empty")
       
       e.bind("click",show)
     </script>
