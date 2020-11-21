@@ -9,31 +9,31 @@
       </script>
   </head>
 
-<body onload="brython()">
-  <h1 id="score">0 - 0</h1>
-  <canvas id="stage" width="800" height="600" style="width: 100%"></canvas>
+  <body onload="brython()">
+    <h1 id="score">0 - 0</h1>
+    <canvas id="stage" width="800" height="600" style="width: 100%"></canvas>
 
-  <script type="text/python">
+    <script type="text/python">
 
-    #Imports
-    from browser import document as doc
-    from random import random
-    from time import sleep
+      #Imports
+      from browser import document as doc
+      from random import random
+      from time import sleep
 
-    #Setting up stage
-    canvas = doc["stage"]
-    pane = canvas.getContext("2d")
+      #Setting up stage
+      canvas = doc["stage"]
+      pane = canvas.getContext("2d")
 
-    pane.fillStyle = "black"
+      pane.fillStyle = "black"
 
-    score_pane = document['score']
+      score_pane = document['score']
 
-    #Functions & Classes
-    def clear():
+      #Functions & Classes
+      def clear():
         pane.clearRect(0,0,canvas.width,canvas.height)
 
-    class Paddle:
-      def __init__(self, side):
+      class Paddle:
+        def __init__(self, side):
           self.y = 300
           if side:
             self.x = 750
@@ -41,20 +41,19 @@
             self.x = 50
 
           self.side = side
-
           self.other = self.y + p_size[1]
 
-      def move(direction):
-          if direction and self.other < 590:
+        def move(direction):
+            if direction and self.other < 590:
               self.y += direction
 
-          elif (not direction) and (self.y > 10):
+            elif (not direction) and (self.y > 10):
               self.y += direction
 
             self.other = self.y + p_size[1]
 
-      def contact(obj):
-        if self.side:
+        def contact(obj):
+          if self.side:
             obj['x'] -= 3
           else:
             obj['x'] += 3
@@ -62,33 +61,33 @@
           obj['velocity'][0] = 0 - obj['velocity'][0]
           obj['velocity'][1] += random() + random()
 
-    ball = {"velocity":(3,0),"x":400,"y":300}
+      ball = {"velocity":(3,0),"x":400,"y":300}
 
-    left = Paddle(0)
-    right = Paddle(1)
+      left = Paddle(0)
+      right = Paddle(1)
 
-    score = (0,0)
+      score = (0,0)
 
-    def keyCode(ev):
+      def keyCode(ev):
         key = ev.keyCode
 
         if key == 38:
           right.move(2)
 
-      elif key == 40:
+        elif key == 40:
           right.move(-2)
 
-        elif key == 87:
+          elif key == 87:
           left.move(2)
 
-        elif key == 83:
+          elif key == 83:
           left.move(-2)
 
-    p_size = (3,100)
-    b_size = 30
+      p_size = (3,100)
+      b_size = 30
 
-    def draw():
-      #right
+      def draw():
+        #right
         pane.fillRect(right.x,right.y,*p_size)
         pane.fill()
 
@@ -97,29 +96,29 @@
         pane.fill()
 
         #ball
-      pane.fillRect(ball['x'],ball['y'],b_size,b_size)
+        pane.fillRect(ball['x'],ball['y'],b_size,b_size)
         pane.fill()
 
-    def show_score(score):
-      score_pane.text = f"{score[0]} - {score[1]}"
+      def show_score(score):
+        score_pane.text = f"{score[0]} - {score[1]}"
 
-    def bounce():
-      if right.y < ball['y'] < right.other:
+      def bounce():
+        if right.y < ball['y'] < right.other:
           if ball['x'] == right.x:
-              right.collide(ball)
+            right.collide(ball)
 
         elif left.y < ball['y'] < left.other:
           if ball['x'] == left.x:
-              left.collide(ball)
+            left.collide(ball)
 
         if ball['y'] > 590 or ball['y'] < 10:
           obj['velocity'][1] = 0 - obj['velocity'][1]
 
-    document["keyCodeKeydown"].bind("keydown", keyCode)
+      document["keyCodeKeydown"].bind("keydown", keyCode)
 
-    #Game Loop
-    while True:
-      sleep(0.01)
+      #Game Loop
+      while True:
+        sleep(0.01)
         clear()
 
         ball['x'] += ball['velocity'][0]
@@ -130,24 +129,24 @@
 
         if ball['x'] < 10:
           score[1] += 1
-            ball = {"velocity":(-3,0),"x":400,"y":300}
+          ball = {"velocity":(-3,0),"x":400,"y":300}
 
-            left.y = 300
-            right.y = 300
+          left.y = 300
+          right.y = 300
 
         elif ball['x'] > 790:
-        score[0] += 1
-            ball = {"velocity":(3,0),"x":400,"y":300}
+          score[0] += 1
+          ball = {"velocity":(3,0),"x":400,"y":300}
 
-            left.y = 300
-            right.y = 300
+          left.y = 300
+          right.y = 300
 
         show_score(score)  
 
 
-  </script>
+    </script>
 
 
-</body>
+  </body>
 
 </html>
