@@ -21,6 +21,7 @@
     
     <script type="text/python">
       from browser import document, html
+      from pydoc import help as get_help
       
       i = document['input']
       e = document['enter']
@@ -30,7 +31,7 @@
         text = i.value
         o.text = text
         
-        help(i)
+        print(get_help(i))
       
       o.text = "Empty"
       e.bind("click",show)
