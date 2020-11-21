@@ -17,8 +17,17 @@
 
       #Imports
       from browser import document as doc
-      from random import random
-      from time import sleep
+      from time import time
+      import math
+      
+      def sigmoid(x):
+        return 1 / (1 + math.exp(-x))
+        
+      def random():
+        t = time()
+        print(f"Time: {time}" 
+        out = t * 2.2352**2/(123*(882/23))**1.23514232
+        return sigmoid(out)
 
       #Setting up stage
       canvas = doc["stage"]
@@ -117,8 +126,7 @@
       document["keyCodeKeydown"].bind("keydown", keyCode)
 
       #Game Loop
-      while True:
-        sleep(0.01)
+      def game():
         clear()
 
         ball['x'] += ball['velocity'][0]
