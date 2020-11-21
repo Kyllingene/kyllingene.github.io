@@ -1,0 +1,6 @@
+* {background-color: #242424; color: white; text-align: center; font-size: 20px; font-family: 'Noto Sans JP'}
+
+a:link {color: lightgray}
+a:visited {color: lightgray}
+a:hover {color: darkblue; text-decoration: bold}
+a:active {color: darkblue; text-decoration: bold}
