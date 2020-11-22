@@ -11,7 +11,7 @@
 
   <body onload="brython()">
     <h1 id="score">0 - 0</h1>
-    <canvas id="stage" width="800" height="600" style="width: 100%"></canvas>
+    <canvas id="stage" width="700" height="600" style="width: 100%"></canvas>
 
     <script type="text/python">
 
@@ -43,7 +43,7 @@
         def __init__(self, side):
           self.y = 300
           if side:
-            self.x = 750
+            self.x = 650
           else:
             self.x = 50
 
@@ -73,13 +73,13 @@
         
       ball = Container()
       ball.velocity = [3,0]
-      ball.x = 400
+      ball.x = 350
       ball.y = 300
 
       left = Paddle(0)
       right = Paddle(1)
 
-      score = (0,0)
+      score = [0,0]
 
       def keyCode(ev):
         key = ev.keyCode
@@ -145,7 +145,7 @@
         if ball.x < 10:
           score[1] += 1
           ball.velocity = [-3,0]
-          ball.x = 400
+          ball.x = 350
           ball.y = 300
 
           left.y = 300
@@ -154,7 +154,7 @@
         elif ball.x > 790:
           score[0] += 1
           ball.velocity = [3,0]
-          ball.x = 400
+          ball.x = 350
           ball.y = 300
 
           left.y = 300
