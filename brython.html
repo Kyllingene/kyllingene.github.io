@@ -20,7 +20,10 @@
       from browser_timer import request_animation_frame as raf
       from random import random
       #from time import sleep
-
+      
+      p_size = (3,100)
+      b_size = 30
+      
       #Setting up stage
       canvas = doc["stage"]
       pane = canvas.getContext("2d")
@@ -83,9 +86,6 @@
 
         elif key == 83:
           left.move(-2)
-
-      p_size = (3,100)
-      b_size = 30
 
       def draw():
         #right
