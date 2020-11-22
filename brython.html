@@ -9,7 +9,7 @@
       </script>
   </head>
 
-  <body onload="brython()">
+  <body onload="brython()" id="body">
     <a href="/">Back</a><br>
     <h1 id="score">0 - 0</h1>
     <canvas id="stage" width="700" height="600" style="width: 100%"></canvas>
@@ -128,16 +128,15 @@
         if (right.y <= ball.y <= right.other) or (right.y <= (ball.y+b_size) <= right.other):
           if ball.x == right.x:
             right.collide(ball)
-            print('a')
 
         if (left.y <= ball.y <= left.other) or (left.y <= (ball.y+b_size) <= left.other):
           if ball.x == left.x:
             left.collide(ball)
 
         if ball.y > 585 or ball.y < 10:
-          obj.velocity[1] = 0 - obj.velocity[1]
+          ball.velocity[1] = 0 - ball.velocity[1]
 
-      doc["stage"].bind("keydown", keyCode) 
+      doc["body"].bind("keydown", keyCode) 
       
       #Game Loop
       def game():
