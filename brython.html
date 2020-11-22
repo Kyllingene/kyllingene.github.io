@@ -98,32 +98,32 @@
           print(f"UP: {key}")
 
           if key == 38:
-            down.update({38,True})
+            down.update({38:True})
 
           elif key == 40:
-            down.update({40,True})
+            down.update({40:True})
 
           elif key == 105:
-            down.update({105,True})
+            down.update({105:True})
             
           elif key == 107:
-            down.update({107,True})
+            down.update({107:True})
             
         elif ev.type == "keyup":
           key = ev.keyCode
           print(f"DOWN: {key}")
 
           if key == 38:
-            down.update({38,False})
+            down.update({38:False})
 
           elif key == 40:
-            down.update({40,False})
+            down.update({40:False})
 
           elif key == 105:
-            down.update({105,False})
+            down.update({105:False})
             
           elif key == 107:
-            down.update({107,False})
+            down.update({107:False})
 
       def draw():
         #right
