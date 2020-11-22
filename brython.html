@@ -123,7 +123,7 @@
 
       def bounce():
         global ball
-        print(right.x,ball.x)
+        print(right.y,ball.y,right.other)
         if right.y < ball.y < right.other:
           if ball.x == right.x:
             right.collide(ball)
