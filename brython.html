@@ -22,28 +22,34 @@
       #from time import sleep
       
       p_size = (3,100)
-      b_size = 30
+      b_size = 20
       
       #Setting up stage
       canvas = doc["stage"]
       pane = canvas.getContext("2d")
-
+      
+      width = canvas.width
+      right_loc = width - 50
+      ball_loc = width/2
+      
+      mid = canvas.height / 2
+      
       pane.fillStyle = "white"
 
       score_pane = doc['score']
 
       #Functions & Classes
       def clear():
-        pane.fillStyle = "black"
+        pane.fillStyle = "#242424"
         pane.fillRect(0,0,canvas.width,canvas.height)
         pane.fill()
         pane.fillStyle = "white"
 
       class Paddle:
         def __init__(self, side):
-          self.y = 300
+          self.y = mid
           if side:
-            self.x = 650
+            self.x = right_loc
           else:
             self.x = 50
 
@@ -73,8 +79,8 @@
         
       ball = Container()
       ball.velocity = [3,0]
-      ball.x = 350
-      ball.y = 300
+      ball.x = ball_loc
+      ball.y = mid
 
       left = Paddle(0)
       right = Paddle(1)
@@ -124,7 +130,7 @@
           if ball.x == left.x:
             left.collide(ball)
 
-        if ball.y > 590 or ball.y < 10:
+        if ball.y > 590 or ball.y < 30:
           obj.velocity[1] = 0 - obj.velocity[1]
 
       doc["stage"].bind("keydown", keyCode)
@@ -145,20 +151,20 @@
         if ball.x < 10:
           score[1] += 1
           ball.velocity = [-3,0]
-          ball.x = 350
-          ball.y = 300
+          ball.x = ball_loc
+          ball.y = mid
 
-          left.y = 300
-          right.y = 300
+          left.y = mid
+          right.y = mid
 
         elif ball.x > 790:
           score[0] += 1
           ball.velocity = [3,0]
-          ball.x = 350
-          ball.y = 300
+          ball.x = ball_loc
+          ball.y = mid
 
-          left.y = 300
-          right.y = 300
+          left.y = mid
+          right.y = mid
 
         show_score(score)
         print("A")
