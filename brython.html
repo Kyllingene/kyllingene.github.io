@@ -59,11 +59,14 @@
           self.other = self.y + p_size[1]
 
         def move(self, direction):
+          print("MOVING")
           if direction and self.other < 590:
             self.y += direction
+            print("MOVED")
 
           elif (not direction) and (self.y > 10):
             self.y += direction
+            print("MOVED")
 
           self.other = self.y + p_size[1]
 
@@ -124,6 +127,8 @@
             
           elif key == 107:
             down.update({107:False})
+            
+        print(down)
 
       def draw():
         #right
@@ -161,16 +166,20 @@
           if val:
             if key == 38:
               left.move(2)
+              print("MOVED LEFT")
               
             elif key == 40:
               left.move(-2)
+              print("MOVED LEFT")
               
             elif key == 105:
               right.move(2)
+              print("MOVED RIGHT")
               
             elif key == 107:
               right.move(-2)
-      
+              print("MOVED RIGHT")
+              
       #Game Loop
       def game():
         clear()
