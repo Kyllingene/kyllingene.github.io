@@ -23,7 +23,7 @@
       #from time import sleep
       
       p_size = (3,100)
-      b_size = 20
+      b_size = 5
       
       #Setting up stage
       canvas = doc["stage"]
@@ -72,7 +72,7 @@
           else:
             obj.x += 3
 
-          obj.velocity[0] = 0 - objvelocity[0]
+          obj.velocity[0] = 0 - obj.velocity[0]
           obj.velocity[1] += random() + random()
       
       class Container:
@@ -124,15 +124,15 @@
       def bounce():
         global ball
         print(right.y,ball.y,right.other)
-        if right.y < ball.y < right.other:
+        if (right.y <= ball.y <= right.other) or (right.y <= (ball.y+b_size) <= right.other):
           if ball.x == right.x:
             right.collide(ball)
 
-        elif left.y < ball.y < left.other:
+        elif if (left.y <= ball.y <= left.other) or (left.y <= (ball.y+b_size) <= left.other):
           if ball.x == left.x:
             left.collide(ball)
 
-        if ball.y > 590 or ball.y < 30:
+        if ball.y > 585 or ball.y < 10:
           obj.velocity[1] = 0 - obj.velocity[1]
 
       doc["stage"].bind("keydown", keyCode) 
@@ -158,7 +158,7 @@
           left.y = mid
           right.y = mid
 
-        elif ball.x > 790:
+        elif ball.x > 690:
           score[0] += 1
           show_score(score)
           ball.velocity = [3,0]
