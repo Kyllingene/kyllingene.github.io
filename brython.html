@@ -90,7 +90,8 @@
 
       def keyCode(ev):
         key = ev.keyCode
-
+        print(key)
+        
         if key == 38:
           right.move(2)
 
@@ -129,7 +130,7 @@
             right.collide(ball)
             print('a')
 
-        elif (left.y <= ball.y <= left.other) or (left.y <= (ball.y+b_size) <= left.other):
+        if (left.y <= ball.y <= left.other) or (left.y <= (ball.y+b_size) <= left.other):
           if ball.x == left.x:
             left.collide(ball)
 
