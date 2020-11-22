@@ -121,7 +121,9 @@
           obj['velocity'][1] = 0 - obj['velocity'][1]
 
       doc["stage"].bind("keydown", keyCode)
-
+      
+      print("C")
+      
       #Game Loop
       def game():
         clear()
@@ -153,6 +155,9 @@
         global id
         id = raf(animate)
         game()
+        print("B")
+        
+      print("D")
 
     </script>
 
