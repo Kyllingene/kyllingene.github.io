@@ -123,10 +123,11 @@
 
       def bounce():
         global ball
-        print(right.y,ball.y,right.other)
+        print(right.y <= ball.y <= right.other) or (right.y <= (ball.y+b_size) <= right.other)
         if (right.y <= ball.y <= right.other) or (right.y <= (ball.y+b_size) <= right.other):
           if ball.x == right.x:
             right.collide(ball)
+            print('a')
 
         elif (left.y <= ball.y <= left.other) or (left.y <= (ball.y+b_size) <= left.other):
           if ball.x == left.x:
