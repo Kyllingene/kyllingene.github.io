@@ -5,7 +5,7 @@
     
       <meta charset="utf-8">
       <script type="text/javascript"
-      src="/brython.js">
+      src="/brython/brython.js">
       </script>
   </head>
 
@@ -17,21 +17,9 @@
 
       #Imports
       from browser import document as doc
+	  from browser.timer import request_animation_frame as raf
       from random import random
-      
-      #from time import time
-      #import math
-      
-      def sigmoid(x):
-        return 1 / (1 + math.exp(-x))
-      
-      """
-      def random():
-        t = time()
-        print(f"Time: {time}")
-        out = t * 2.2352**2/(123*(882/23))**1.23514232
-        return sigmoid(out)
-      """
+      from time import sleep
 
       #Setting up stage
       canvas = doc["stage"]
