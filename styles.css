@@ -6,6 +6,8 @@ h4 {font-size: 35px}
 h5 {font-size: 30px}
 h6 {font-size: 25px}
 
+footer {font-size: 15px}
+
 a:link {color: white}
 a:visited {color: white}
 a:hover {color: darkblue; text-decoration: bold}
