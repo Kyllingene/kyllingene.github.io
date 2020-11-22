@@ -1,4 +1,4 @@
-import _locale
+import locale
 import javascript
 
 # Javascript Date constructor
