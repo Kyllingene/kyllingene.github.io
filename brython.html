@@ -65,8 +65,8 @@
           else:
             obj.x += 3
 
-          obj['velocity'][0] = 0 - obj['velocity'][0]
-          obj['velocity'][1] += random() + random()
+          obj.velocity[0] = 0 - objvelocity[0]
+          obj.velocity[1] += random() + random()
       
       class Container:
         pass
@@ -108,7 +108,7 @@
         pane.fill()
 
         #ball
-        pane.fillRect(ball['x'],ball['y'],b_size,b_size)
+        pane.fillRect(ball.x,ball.y,b_size,b_size)
         pane.fill()
 
       def show_score(score):
@@ -142,7 +142,7 @@
         bounce()
         draw()
 
-        if ball['x'] < 10:
+        if ball.x < 10:
           score[1] += 1
           ball.velocity = [-3,0]
           ball.x = 400
@@ -151,7 +151,7 @@
           left.y = 300
           right.y = 300
 
-        elif ball['x'] > 790:
+        elif ball.x > 790:
           score[0] += 1
           ball.velocity = [3,0]
           ball.x = 400
