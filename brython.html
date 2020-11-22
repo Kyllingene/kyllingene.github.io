@@ -92,7 +92,7 @@
 
       score = [0,0]
       
-      down = {38:False,40:False,105:False,107:False}
+      down = {73:False,75:False,87:False,83:False}
       
       def keyCode(ev):
         if ev.type == "keydown":
@@ -158,23 +158,40 @@
 
         if ball.y > 585 or ball.y < 10:
           ball.velocity[1] = 0 - ball.velocity[1]
-
-      doc["body"].bind("keydown", keyCode) 
-      doc["body"].bind("keyup", keyCode) 
+      
+      def keyDown(ev):
+        global down
+        convert = {105:73,107:75,119:87,115:83}
+        key = ev.keyCode
+        
+        if key not in convert:
+          return
+        
+        key = convert[key]
+        down.update({key:True})
+        
+      def keyUp(ev):
+        global down
+        key = ev.keyCode
+        if key in down:
+          down.update({key:False})
+      
+      doc["body"].bind("keydown", keyDown) 
+      doc["body"].bind("keyup", keyUp) 
       
       def move():
         for key,val in down.items():
           if val:
-            if key == 38:
+            if key == 87:
               left.move(-2)
               
-            elif key == 40:
+            elif key == 83:
               left.move(2)
               
             elif key == 105:
               right.move(-2)
               
-            elif key == 107:
+            elif key == 115:
               right.move(2)
               
       #Game Loop
