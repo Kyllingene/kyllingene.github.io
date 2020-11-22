@@ -10,6 +10,7 @@
   </head>
 
   <body onload="brython()">
+    <a href="/">Back</a><br>
     <h1 id="score">0 - 0</h1>
     <canvas id="stage" width="700" height="600" style="width: 100%"></canvas>
 
@@ -122,6 +123,7 @@
 
       def bounce():
         global ball
+        print(right.x,ball.x)
         if right.y < ball.y < right.other:
           if ball.x == right.x:
             right.collide(ball)
