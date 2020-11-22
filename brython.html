@@ -87,24 +87,43 @@
       right = Paddle(1)
 
       score = [0,0]
-
+      
+      down = {38:False,40:False,105:False,107:False}
+      
       def keyCode(ev):
         if ev.type == "keydown":
       
           key = ev.keyCode
-          print(key)
+          print(f"UP: {key}")
 
           if key == 38:
-            right.move(2)
+            down.update({38,True})
 
           elif key == 40:
-            right.move(-2)
+            down.update({40,True})
 
-          elif key == 87:
-            left.move(2)
+          elif key == 105:
+            down.update({105,True})
+            
+          elif key == 107:
+            down.update({107,True})
+            
+        elif ev.type == "keyup":
+          
+          key = ev.keyCode
+          print(f"DOWN: {key}")
 
-          elif key == 83:
-            left.move(-2)
+          if key == 38:
+            down.update({38,False})
+
+          elif key == 40:
+            down.update({40,False})
+
+          elif key == 105:
+            down.update({105,False})
+            
+          elif key == 107:
+            down.update({107,False})
 
       def draw():
         #right
@@ -137,6 +156,21 @@
 
       doc["body"].bind("keydown", keyCode) 
       
+      def move():
+        for key,val in down:
+          if val:
+            if key == 38:
+              left.move(2)
+              
+            elif key == 40:
+              left.move(-2)
+              
+            elif key == 105:
+              right.move(2)
+              
+            elif key == 107:
+              right.move(-2)
+      
       #Game Loop
       def game():
         clear()
@@ -144,7 +178,8 @@
 
         ball.x += ball.velocity[0]
         ball.y += ball.velocity[1]
-
+        
+        move()
         bounce()
         draw()
 
