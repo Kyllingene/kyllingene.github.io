@@ -100,11 +100,11 @@
           key = ev.keyCode
           print(f"UP: {key}")
 
-          if key == 38:
-            down.update({38:True})
+          if key == 87:
+            down.update({87:True})
 
-          elif key == 40:
-            down.update({40:True})
+          elif key == 83:
+            down.update({83:True})
 
           elif key == 105:
             down.update({105:True})
@@ -166,20 +166,16 @@
         for key,val in down.items():
           if val:
             if key == 38:
-              left.move(2)
-              print("MOVED LEFT")
+              left.move(-2)
               
             elif key == 40:
-              left.move(-2)
-              print("MOVED LEFT")
+              left.move(2)
               
             elif key == 105:
-              right.move(2)
-              print("MOVED RIGHT")
+              right.move(-2)
               
             elif key == 107:
-              right.move(-2)
-              print("MOVED RIGHT")
+              right.move(2)
               
       #Game Loop
       def game():
