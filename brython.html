@@ -115,7 +115,7 @@
         if ball['y'] > 590 or ball['y'] < 10:
           obj['velocity'][1] = 0 - obj['velocity'][1]
 
-      doc["canvas"].bind("keydown", keyCode)
+      doc["stage"].bind("keydown", keyCode)
 
       #Game Loop
       def game():
