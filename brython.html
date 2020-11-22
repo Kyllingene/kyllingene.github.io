@@ -109,7 +109,6 @@
             down.update({107,True})
             
         elif ev.type == "keyup":
-          
           key = ev.keyCode
           print(f"DOWN: {key}")
 
@@ -157,7 +156,7 @@
       doc["body"].bind("keydown", keyCode) 
       
       def move():
-        for key,val in down:
+        for key,val in down.items():
           if val:
             if key == 38:
               left.move(2)
