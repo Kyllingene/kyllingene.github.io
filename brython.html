@@ -135,9 +135,7 @@
         if ball.y > 590 or ball.y < 30:
           obj.velocity[1] = 0 - obj.velocity[1]
 
-      doc["stage"].bind("keydown", keyCode)
-      
-      print("C")
+      doc["stage"].bind("keydown", keyCode) 
       
       #Game Loop
       def game():
@@ -152,6 +150,7 @@
 
         if ball.x < 10:
           score[1] += 1
+          show_score(score)
           ball.velocity = [-3,0]
           ball.x = ball_loc
           ball.y = mid
@@ -161,6 +160,7 @@
 
         elif ball.x > 790:
           score[0] += 1
+          show_score(score)
           ball.velocity = [3,0]
           ball.x = ball_loc
           ball.y = mid
@@ -168,16 +168,12 @@
           left.y = mid
           right.y = mid
 
-        show_score(score)
-        print("A")
         
       def loop(i):
         global id
         id = raf(loop)
         game()
-        print("B")
         
-        print("D")
     
       loop(0)
     
