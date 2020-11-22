@@ -160,6 +160,7 @@
           ball.velocity[1] = 0 - ball.velocity[1]
 
       doc["body"].bind("keydown", keyCode) 
+      doc["body"].bind("keyup", keyCode) 
       
       def move():
         for key,val in down.items():
