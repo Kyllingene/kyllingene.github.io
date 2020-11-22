@@ -34,7 +34,10 @@
 
       #Functions & Classes
       def clear():
-        pane.clearRect(0,0,canvas.width,canvas.height)
+        pane.fillStyle = "black"
+        pane.fillRect(0,0,canvas.width,canvas.height)
+        pane.fill()
+        pane.fillStyle = "white"
 
       class Paddle:
         def __init__(self, side):
@@ -144,6 +147,7 @@
           right.y = 300
 
         show_score(score)
+        print("A")
         
       def loop(i):
         global id
