@@ -61,14 +61,20 @@
 
         def contact(obj):
           if self.side:
-            obj['x'] -= 3
+            obj.x -= 3
           else:
-            obj['x'] += 3
+            obj.x += 3
 
           obj['velocity'][0] = 0 - obj['velocity'][0]
           obj['velocity'][1] += random() + random()
-
-      ball = {"velocity":(3,0),"x":400,"y":300}
+      
+      class Container:
+        pass
+        
+      ball = Container()
+      ball.velocity = [3,0]
+      ball.x = 400
+      ball.y = 300
 
       left = Paddle(0)
       right = Paddle(1)
@@ -109,16 +115,17 @@
         score_pane.text = f"{score[0]} - {score[1]}"
 
       def bounce():
-        if right.y < ball['y'] < right.other:
-          if ball['x'] == right.x:
+        global ball
+        if right.y < ball.y < right.other:
+          if ball.x == right.x:
             right.collide(ball)
 
-        elif left.y < ball['y'] < left.other:
-          if ball['x'] == left.x:
+        elif left.y < ball.y < left.other:
+          if ball.x == left.x:
             left.collide(ball)
 
-        if ball['y'] > 590 or ball['y'] < 10:
-          obj['velocity'][1] = 0 - obj['velocity'][1]
+        if ball.y > 590 or ball.y < 10:
+          obj.velocity[1] = 0 - obj.velocity[1]
 
       doc["stage"].bind("keydown", keyCode)
       
@@ -127,23 +134,28 @@
       #Game Loop
       def game():
         clear()
+        global ball
 
-        ball['x'] += ball['velocity'][0]
-        ball['y'] += ball['velocity'][1]
+        ball.x += ball.velocity[0]
+        ball.y += ball.velocity[1]
 
         bounce()
         draw()
 
         if ball['x'] < 10:
           score[1] += 1
-          ball = {"velocity":(-3,0),"x":400,"y":300}
+          ball.velocity = [-3,0]
+          ball.x = 400
+          ball.y = 300
 
           left.y = 300
           right.y = 300
 
         elif ball['x'] > 790:
           score[0] += 1
-          ball = {"velocity":(3,0),"x":400,"y":300}
+          ball.velocity = [3,0]
+          ball.x = 400
+          ball.y = 300
 
           left.y = 300
           right.y = 300
