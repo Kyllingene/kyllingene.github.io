@@ -3,6 +3,13 @@
   <head>
       <link rel="stylesheet" href="/styles.css?">
       <title>Pong | Kyllingene</title>  
+      
+      <style>
+        #container {
+          height: 90%;
+          width: 100%;
+        }
+      </style>
     
       <meta charset="utf-8">
       <script type="text/javascript"
@@ -12,8 +19,11 @@
 
   <body onload="brython()" id="body">
     <a href="/">Back</a><br>
-    <h1 id="score">0 - 0</h1>
-    <canvas id="stage" width="95%" height="95%"></canvas>
+    <h3 id="score">0 - 0</h3>
+    
+    <div id="container">
+    <canvas id="stage"></canvas>
+    </div>
 
     <script type="text/python">
 
@@ -29,6 +39,7 @@
       #Setting up stage
       canvas = doc["stage"]
       pane = canvas.getContext("2d")
+      container = doc["container"]
       
       width = canvas.width
       height = canvas.height
@@ -83,6 +94,33 @@
 
           obj.velocity[0] = 0 - obj.velocity[0]
           obj.velocity[1] += random() + (random() / 2)
+      
+      def size():
+        global width
+        global height
+        global right_loc
+        global ball_loc
+        global top
+        global mid
+        global bot
+        global rightb
+        global leftb
+        
+        canvas.width = container.width
+        canvas.height = container.height
+        
+        width = canvas.clientWidth
+        height = canvas.clientHeight
+
+        right_loc = width - 50
+        ball_loc = width/2
+
+        top = height - 10
+        mid = height / 2
+        bot = 10
+
+        rightb = width - 10
+        leftb = 10
       
       class Container:
         pass
@@ -182,7 +220,8 @@
           down.update({key:False})
       
       doc["body"].bind("keydown", keyDown) 
-      doc["body"].bind("keyup", keyUp) 
+      doc["body"].bind("keyup", keyUp)
+      doc['body'].bind('resize', size)
       
       def move():
         for key,val in down.items():
