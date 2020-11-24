@@ -13,7 +13,7 @@
   <body onload="brython()" id="body">
     <a href="/">Back</a><br>
     <h1 id="score">0 - 0</h1>
-    <canvas id="stage" width="700" height="600" style="width: 100%"></canvas>
+    <canvas id="stage" width="95%" height="95%"></canvas>
 
     <script type="text/python">
 
@@ -31,10 +31,17 @@
       pane = canvas.getContext("2d")
       
       width = canvas.width
+      height = canvas.height
+      
       right_loc = width - 50
       ball_loc = width/2
       
-      mid = canvas.height / 2
+      top = height - 10
+      mid = height / 2
+      bot = 10
+      
+      right = width - 10
+      left = 10
       
       pane.fillStyle = "white"
 
@@ -60,13 +67,11 @@
 
         def move(self, direction):
           print("MOVING")
-          if direction and self.other < 590:
+          if direction and self.other < top:
             self.y += direction
-            print("MOVED")
 
           elif (not direction) and (self.y > 10):
             self.y += direction
-            print("MOVED")
 
           self.other = self.y + p_size[1]
 
@@ -156,7 +161,7 @@
           if ball.x == left.x:
             left.collide(ball)
 
-        if ball.y > 585 or ball.y < 10:
+        if ball.y > top-b_size or ball.y < bot:
           ball.velocity[1] = 0 - ball.velocity[1]
       
       def keyDown(ev):
@@ -206,7 +211,7 @@
         bounce()
         draw()
 
-        if ball.x < 10:
+        if ball.x < left:
           score[1] += 1
           show_score(score)
           ball.velocity = [-3,0]
@@ -216,7 +221,7 @@
           left.y = mid
           right.y = mid
 
-        elif ball.x > 690:
+        elif ball.x > right:
           score[0] += 1
           show_score(score)
           ball.velocity = [3,0]
