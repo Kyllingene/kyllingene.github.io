@@ -40,8 +40,8 @@
       mid = height / 2
       bot = 10
       
-      right = width - 10
-      left = 10
+      rightb = width - 10
+      leftb = 10
       
       pane.fillStyle = "white"
 
@@ -211,7 +211,7 @@
         bounce()
         draw()
 
-        if ball.x < left:
+        if ball.x < leftb:
           score[1] += 1
           show_score(score)
           ball.velocity = [-3,0]
@@ -221,7 +221,7 @@
           left.y = mid
           right.y = mid
 
-        elif ball.x > right:
+        elif ball.x > rightb:
           score[0] += 1
           show_score(score)
           ball.velocity = [3,0]
