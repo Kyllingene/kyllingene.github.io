@@ -111,17 +111,17 @@
       
       function keyDown (ev) {
         var key = ev.key.toLowerCase();
-        if (key in down.keys()) {down[key] = true;}
+        if (key in Object.keys(down)) {down[key] = true;}
       }
       
       function keyUp (ev) {
         var key = ev.key.toLowerCase();
-        if (key in down.keys()) {down[key] = false;}
+        if (key in Object.keys(down)) {down[key] = false;}
       }
       
       function movePaddles () {
-        for (index=0;index<down.keys().length;index++) {
-          var key = down.keys()[index];
+        for (index = 0;index < Object.keys(down).length; index++) {
+          var key = Object.keys(down)[index];
           if (down[key] == true) {
             if (key == "w") {left_paddle.move(-2);}
             else if (key == "s") {left_paddle.move(2);}
@@ -188,7 +188,7 @@
       function showScore () {
         scoreboard = document.getElementById("score");
         
-        scoreboard.innerHTML = scorel+" : "+scorer;
+        scoreboard.innerHTML = "${scorel} : ${scorer}";
       }
       
       function drawBall () {
