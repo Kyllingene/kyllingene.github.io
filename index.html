@@ -31,10 +31,17 @@
     <title>Not a blog.</title>
     
     <style>
-      footer {
-        position: fixed;
-        top: 95%;
-      }
+      .sidenav {
+        height: 100%; /* Full-height: remove this if you want "auto" height */
+        width: 160px; /* Set the width of the sidebar */
+        position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        background-color: grey; /* Black */
+        overflow-x: hidden;
+        padding-top: 20px;
+       }
     </style>
   </head>
   
@@ -52,10 +59,10 @@
       and include the word "Kyllingene".
     </b>
     
-    <footer>
+    <div class="sidenav">
       <a href="https://pages.github.com"><b>Github Pages</b></a> | 
       <a href="/brython.html"><b>Pong</b></a> | 
       <a href="/generators.html"><b>Random Generator</b></a>
-    </footer>
+    </div>
   </body>
 </html>
