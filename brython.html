@@ -6,281 +6,195 @@
       
       <style>
         #container {
-          height: 90vh;
-          width: 100vw;
+          height: 90%;
+          width: 100%;
         }
       </style>
     
       <meta charset="utf-8">
-      <script type="text/javascript"
-      src="/brython/brython.js">
-      </script>
   </head>
 
-  <body onload="brython()" id="body">
+  <body id="body">
     <a href="/">Back</a><br>
     <h3 id="score">0 - 0</h3>
     
     <div id="container">
-    <canvas id="stage"></canvas>
+      <canvas id="stage" height=100% width=100%></canvas>
     </div>
 
-    <script type="text/python">
-
-      #Imports
-      from browser import document as doc
-      from browser_timer import request_animation_frame as raf
-      from random import random
-      #from time import sleep
+    <script>
+      /*
+       Keys:
+       I/K: Up/Down Right Paddle
+       W/S: Up/Down Left Paddle
+      */
       
-      p_size = (3,100)
-      b_size = 5
+      var cs = document.getElementById("stage");
+      var canvas = cs.getContext("2d");
+      var body = document.getElementById("body");
       
-      #Setting up stage
-      canvas = doc["stage"]
-      pane = canvas.getContext("2d")
-      container = doc["container"]
+      //Declaring constants
+      var random = Math.random;
+      var raf = browser.timer.request_animation_frame;
       
-      width = canvas.width
-      height = canvas.height
+      var height = cs.height;
+      var width = cs.width;
       
-      right_loc = width - 50
-      ball_loc = width/2
+      canvas.fillStyle = "white";
       
-      top = height - 10
-      mid = height / 2
-      bot = 10
+      var top = height - 10;
+      const bot = 10;
       
-      rightb = width - 10
-      leftb = 10
+      var down = {"w": false, "s": false, "i": false, "k": false};
       
-      pane.fillStyle = "white"
-
-      score_pane = doc['score']
-
-      #Functions & Classes
-      def clear():
-        pane.fillStyle = "#242424"
-        pane.fillRect(0,0,canvas.width,canvas.height)
-        pane.fill()
-        pane.fillStyle = "white"
-
-      class Paddle:
-        def __init__(self, side):
-          self.y = mid
-          if side:
-            self.x = right_loc
-          else:
-            self.x = 50
-
-          self.side = side
-          self.other = self.y + p_size[1]
-
-        def move(self, direction):
-          print("MOVING")
-          if direction and self.other < top:
-            self.y += direction
-
-          elif (not direction) and (self.y > 10):
-            self.y += direction
-
-          self.other = self.y + p_size[1]
-
-        def collide(self, obj):
-          if self.side:
-            obj.x -= 3
-          else:
-            obj.x += 3
-
-          obj.velocity[0] = 0 - obj.velocity[0]
-          obj.velocity[1] += random() + (random() / 2)
+      var midx = width / 2;
+      var midy = height / 2;
       
-      def size():
-        global width
-        global height
-        global right_loc
-        global ball_loc
-        global top
-        global mid
-        global bot
-        global rightb
-        global leftb
+      var right_p = width - 25;
+      const left_p = 25;
+      
+      const p_length = 20;
+      const p_width = 2;
+      const b_size = 5;
+      
+      var right = width - 10;
+      const left = 10;
+      
+      class Paddle {
+        constructor (x) {
+          this.y = mid;
+          this.x = x;
+          this.other = this.y + p_length;
+        }
         
-        canvas.width = container.width
-        canvas.height = container.height
+        collide (other) {
+          other.velx = (0 - other.velx);
+          
+          var change = random();
+          var ychange = (change - (change / 2)) * 2;
+          
+          other.vely += ychange;
+        }
         
-        width = canvas.clientWidth
-        height = canvas.clientHeight
-
-        right_loc = width - 50
-        ball_loc = width/2
-
-        top = height - 10
-        mid = height / 2
-        bot = 10
-
-        rightb = width - 10
-        leftb = 10
+        move (amount) {
+          if (((this.y >= top) == false) && ((this.y <= bot) == false)) {
+            this.y += amount;
+            this.other = this.y + p_length;
+          }
+        
+        draw () {
+          canvas.fillRect(this.x, this.y, p_width, p_height);
+        }
+          
+        }
       
-      class Container:
-        pass
-        
-      ball = Container()
-      ball.velocity = [3,0]
-      ball.x = ball_loc
-      ball.y = mid
-
-      left = Paddle(0)
-      right = Paddle(1)
-
-      score = [0,0]
+      }
       
-      down = {73:False,75:False,87:False,83:False}
+      function updateVars () {
+        var height = cs.height;
+        var width = cs.width;
+
+        var top = height - 10;
+        const bot = 10;
+
+        var midx = width / 2;
+        var midy = height / 2;
+
+        var right_p = width - 25;
+        const left_p = 25;
+
+        var right = width - 10;
+        const left = 10;
+      }
       
-      def keyCode(ev):
-        if ev.type == "keydown":
+      function keyDown (ev) {
+        var key = ev.key.toLowerCase();
+        if (key in down.keys()) {down[key] = true;}
+      }
       
-          key = ev.keyCode
-          print(f"UP: {key}")
-
-          if key == 87:
-            down.update({87:True})
-
-          elif key == 83:
-            down.update({83:True})
-
-          elif key == 105:
-            down.update({105:True})
-            
-          elif key == 107:
-            down.update({107:True})
-            
-        elif ev.type == "keyup":
-          key = ev.keyCode
-          print(f"DOWN: {key}")
-
-          if key == 38:
-            down.update({38:False})
-
-          elif key == 40:
-            down.update({40:False})
-
-          elif key == 105:
-            down.update({105:False})
-            
-          elif key == 107:
-            down.update({107:False})
-            
-        print(down)
-
-      def draw():
-        #right
-        pane.fillRect(right.x,right.y,*p_size)
-        pane.fill()
-
-        #left
-        pane.fillRect(left.x,left.y,*p_size)
-        pane.fill()
-
-        #ball
-        pane.fillRect(ball.x,ball.y,b_size,b_size)
-        pane.fill()
-
-      def show_score(score):
-        score_pane.text = f"{score[0]} - {score[1]}"
-
-      def bounce():
-        global ball
-        if (right.y <= ball.y <= right.other) or (right.y <= (ball.y+b_size) <= right.other):
-          if ball.x == right.x:
-            right.collide(ball)
-
-        if (left.y <= ball.y <= left.other) or (left.y <= (ball.y+b_size) <= left.other):
-          if ball.x == left.x:
-            left.collide(ball)
-
-        if ball.y > top-b_size or ball.y < bot:
-          ball.velocity[1] = 0 - ball.velocity[1]
+      function keyUp (ev) {
+        var key = ev.key.toLowerCase();
+        if (key in down.keys()) {down[key] = false;}
+      }
       
-      def keyDown(ev):
-        global down
-        convert = {105:73,107:75,119:87,115:83}
-        key = ev.keyCode
-        
-        if key not in convert:
-          return
-        
-        key = convert[key]
-        down.update({key:True})
-        
-      def keyUp(ev):
-        global down
-        key = ev.keyCode
-        if key in down:
-          down.update({key:False})
+      function movePaddles () {
+        for (index=0;index<down.keys.length;index++) {
+          var key = down.keys()[index];
+          if (down[key] == true) {
+            if (key == "w") {left_paddle.move(-2);}
+            elif (key == "s") {left_paddle.move(2);}
+            elif (key == "i") {right_paddle.move(-2);}
+            elif (key == "k") {right_paddle.move(2);}  
+          }
+        }
+      }
       
-      doc["body"].bind("keydown", keyDown) 
-      doc["body"].bind("keyup", keyUp)
-      doc['body'].bind('resize', size)
+      function checkCollide () {
+        if ((ball.y < right_paddle.y) && (ball.y > right_paddle.other) && (ball.x == right_paddle.x)) {
+          right_paddle.collide(ball);
+        }
+        
+        if ((ball.y < left_paddle.y) && (ball.y > left_paddle.other) && (ball.x == left_paddle.x)) {
+          left_paddle.collide(ball);
+        }
+        
+        if ((ball.y > top) || (ball.y < bot)) {ball.vely = (0 - ball.vely);}
+      }
       
-      def move():
-        for key,val in down.items():
-          if val:
-            if key == 87:
-              left.move(-2)
-              
-            elif key == 83:
-              left.move(2)
-              
-            elif key == 73:
-              right.move(-2)
-              
-            elif key == 75:
-              right.move(2)
-              
-        print(down)
-              
-      #Game Loop
-      def game():
-        clear()
-        global ball
-
-        ball.x += ball.velocity[0]
-        ball.y += ball.velocity[1]
+      function moveBall() {
+        ball.x += ball.velx;
+        ball.y += ball.vely;
+        checkCollide();
+      }
+      
+      function loop (i) {
+        id = raf(loop);
+        game();
+      }
+      
+      function clear () {
+        var temp = canvas.fillStyle;
+        canvas.fillStyle = "#242424";
+        canvas.fillRect(0,0,width,height);
+        canvas.fillStyle = temp;
+      }
+      
+      function ball_draw () {
+        var x = ball.x;
+        var y = ball.y;
         
-        move()
-        bounce()
-        draw()
-
-        if ball.x < leftb:
-          score[1] += 1
-          show_score(score)
-          ball.velocity = [-3,0]
-          ball.x = ball_loc
-          ball.y = mid
-
-          left.y = mid
-          right.y = mid
-
-        elif ball.x > rightb:
-          score[0] += 1
-          show_score(score)
-          ball.velocity = [3,0]
-          ball.x = ball_loc
-          ball.y = mid
-
-          left.y = mid
-          right.y = mid
-
+        canvas.fillRect(x,y,b_size,b_size);
+      }
+      
+      function draw () {
+        clear();
         
-      def loop(i):
-        global id
-        id = raf(loop)
-        game()
+        right_paddle.draw();
+        left_paddle.draw();
         
-    
-      loop(0)
-    
+        ball_draw();
+      }
+      
+      function game () {
+        movePaddles();
+        moveBall();
+        draw();
+      }
+      
+      function resize (ev) {
+        updateVars(); 
+      }
+      
+      var right_paddle = new Paddle(right);
+      var left_paddle = new Paddle(left);
+      
+      var ball = {x: midx, y: midy, velx: 3, vely: 0};
+      
+      stage.addEventListener("keydown",keyDown);
+      stage.addEventListener("keyup",keyUp);
+      body.addEventListener("resize",resize);
+      
+      loop(0);
     </script>
 
 
