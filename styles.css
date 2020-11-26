@@ -8,6 +8,7 @@ h6 {font-size: 25px;}
 
 footer {font-size: 15px;}
 
+a {background-color: none;}
 a:link {color: white; text-decoration: underline;}
 a:visited {color: white; text-decoration: underline;}
 a:hover {color: grey; text-decoration: underline;}
