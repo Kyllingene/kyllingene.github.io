@@ -67,7 +67,7 @@
         constructor (x) {
           this.y = midy;
           this.x = x;
-          this.other = this.y + p_length;
+          this.other = this.y + p_height;
         }
         
         collide (other) {
@@ -82,7 +82,7 @@
         move (amount) {
           if (((this.y >= top) == false) && ((this.y <= bot) == false)) {
             this.y += amount;
-            this.other = this.y + p_length;
+            this.other = this.y + p_height;
           }
         }
         
