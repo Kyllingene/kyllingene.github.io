@@ -6,7 +6,7 @@ h4 {font-size: 35px;}
 h5 {font-size: 30px;}
 h6 {font-size: 25px;}
 
-footer {font-size: 15px;}
+footer {font-size: 15px; display: block;}
 
 a:link {color: white; text-decoration: underline; background-color: none;}
 a:visited {color: white; text-decoration: underline; background-color: none;}
