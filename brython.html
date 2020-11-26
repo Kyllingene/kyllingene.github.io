@@ -37,6 +37,9 @@
       var random = Math.random;
       var raf = requestAnimationFrame;
       
+      var scorel = 0;
+      var scorer = 0;
+      
       var height = cs.height;
       var width = cs.width;
       
@@ -62,7 +65,7 @@
       
       class Paddle {
         constructor (x) {
-          this.y = mid;
+          this.y = midy;
           this.x = x;
           this.other = this.y + p_length;
         }
@@ -128,7 +131,31 @@
         }
       }
       
+      function checkScore () {
+        if (ball.x > right) {
+          ball = {x: midx, y: midy, velx: -3, vely: 0};
+          scorel += 1;
+          
+          right_paddle.x = midx;
+          left_paddle.x = midx;
+          
+          showScore();
+        }
+        
+        if (ball.x > left) {
+          ball = {x: midx, y: midy, velx: 3, vely: 0};
+          scorer += 1;
+          
+          right_paddle.x = midx;
+          left_paddle.x = midx;
+          
+          showScore();
+        }
+      }
+      
       function checkCollide () {
+        checkScore();
+        
         if ((ball.y < right_paddle.y) && (ball.y > right_paddle.other) && (ball.x == right_paddle.x)) {
           right_paddle.collide(ball);
         }
@@ -158,7 +185,13 @@
         canvas.fillStyle = temp;
       }
       
-      function ball_draw () {
+      function showScore () {
+        scoreboard = document.getElementById("score");
+        
+        scoreboard.innerHTML = scorel+" : "+scorer;
+      }
+      
+      function drawBall () {
         var x = ball.x;
         var y = ball.y;
         
@@ -171,7 +204,7 @@
         right_paddle.draw();
         left_paddle.draw();
         
-        ball_draw();
+        drawBall();
       }
       
       function game () {
