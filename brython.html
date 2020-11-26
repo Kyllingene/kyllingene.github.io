@@ -40,8 +40,8 @@
       var scorel = 0;
       var scorer = 0;
       
-      var height = cs.height;
-      var width = cs.width;
+      var height = cs.clientHeight;
+      var width = cs.clientWidth;
       
       canvas.fillStyle = "white";
       
@@ -93,8 +93,8 @@
       }
       
       function updateVars () {
-        var height = cs.height;
-        var width = cs.width;
+        var height = cs.clientHeight;
+        var width = cs.clientWidth;
 
         var top = height - 10;
         const bot = 10;
@@ -174,8 +174,8 @@
       }
       
       function loop (i) {
-        id = raf(loop);
         game();
+        id = raf(loop);
       }
       
       function clear () {
