@@ -19,7 +19,7 @@ h6 {font-size: 25px;}
 footer {font-size: 15px; display: block;}
 .sidebar {
   float: right;
-  /*overflow: auto;*/
+  overflow: auto;
   height: 100vh;
   margin-left: 10px;
   margin-right: 5px;
