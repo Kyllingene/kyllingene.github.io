@@ -23,7 +23,7 @@ footer {font-size: 15px; display: block;}
   height: 100vh;
   margin-left: 10px;
   margin-right: 5px;
-  position: static;
+  position: fixed;
   background-color: white;
   display: inline-block;
   text-color: #242424;
