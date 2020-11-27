@@ -29,6 +29,9 @@ footer {font-size: 15px; display: block;}
   background-color: white;
   display: inline-block;
   color: black;
+  
+  border: 2px dashed white;
+  padding: 2px;
 }
 
 a:link {color: white; text-decoration: underline; background-color: none;}
