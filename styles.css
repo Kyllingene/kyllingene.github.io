@@ -17,7 +17,11 @@ footer {font-size: 15px; display: block;}
 .sidebar {
   float: right;
   /*overflow: auto;*/
-  height: 100vh;
+  height: 90vh;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  margin-left: 10px;
+  margin-right: 5px;
   position: static;
   background-color: white;
   display: inline-block;
