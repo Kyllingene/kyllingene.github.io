@@ -6,10 +6,6 @@
   font-family: 'Noto Sans JP';
 }
 
-body {
-  width: 90%;
-}
-
 h1 {font-size: 50px;}
 h2 {font-size: 45px;}
 h3 {font-size: 40px;}
@@ -20,11 +16,11 @@ h6 {font-size: 25px;}
 footer {font-size: 15px; display: block;}
 .sidebar {
   float: right;
-  overflow-wrap: break-word;
-  width: 10%;
+  /*overflow: auto;*/
   height: 100%;
   position: static;
   background-color: white;
+  display: inline-block;
   color: black;
 }
 
