@@ -1,9 +1,12 @@
 * {
-  background-color: #242424;
   color: white;
   text-align: center;
   font-size: 20px;
   font-family: 'Noto Sans JP';
+}
+
+body {
+  background-color: #242424;
 }
 
 h1 {font-size: 50px;}
