@@ -24,6 +24,8 @@ footer {font-size: 15px; display: block;}
   width: 5%;
   height: 100%;
   position: static;
+  background-color: white;
+  color: black;
 }
 
 a:link {color: white; text-decoration: underline; background-color: none;}
