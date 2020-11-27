@@ -39,4 +39,4 @@ a:visited {color: white; text-decoration: underline;}
 a:hover {color: grey; text-decoration: underline;}
 a:active {color: grey; text-decoration: underline;}
 
-a.slink {background-color: white;}
+a.slink {background-color: white;color:black;}
