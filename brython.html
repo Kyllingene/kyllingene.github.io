@@ -230,7 +230,7 @@
       
       stage.addEventListener("keydown",keyDown);
       stage.addEventListener("keyup",keyUp);
-      window.addEventListener("resize",resize);
+      window.onresize = resize;
       
       loop(0);
     </script>
