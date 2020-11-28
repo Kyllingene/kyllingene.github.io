@@ -19,7 +19,7 @@
     <h3 id="score">0 - 0</h3>
     
     <div id="container">
-      <canvas id="stage" height=100% width=100%></canvas>
+      <canvas id="stage"></canvas>
     </div>
 
     <script>
@@ -40,8 +40,11 @@
       var scorel = 0;
       var scorer = 0;
       
-      var height = cs.clientHeight;
-      var width = cs.clientWidth;
+      var height = body.clientHeight;
+      var width = body.clientWidth;
+
+      cs.height = height;
+      cs.width = width;
       
       canvas.fillStyle = "white";
       
@@ -93,8 +96,11 @@
       }
       
       function updateVars () {
-        var height = cs.clientHeight;
-        var width = cs.clientWidth;
+        var height = body.clientHeight;
+        var width = body.clientWidth;
+        
+        cs.height = height;
+        cs.width = width;
 
         var top = height - 10;
         const bot = 10;
