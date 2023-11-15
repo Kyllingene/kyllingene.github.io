@@ -1,0 +1,35 @@
+[[filters]]
+name = "markdown"
+command = "multimarkdown -s {full} -o {outfile}"
+outfile = "{dir}/{name}/index.html"
+
+[[rules]]
+rule = ".*/index.html"
+filters = []
+templates = ["default.html"]
+output = "{dir}/index.html"
+
+[[rules]]
+rule = ".*\\.html"
+filters = []
+templates = ["default.html"]
+output = "{dir}/{name}/index.html"
+
+[[rules]]
+rule = "essays/[^/]+/essay.(md|markdown)"
+filters = ["markdown"]
+templates = ["default.html"]
+output = "essays/{parent}.html"
+
+[[rules]]
+rule = ".*/index.(md|markdown)"
+filters = ["markdown"]
+templates = ["default.html"]
+output = "{dir}/index.html"
+
+[[rules]]
+rule = ".*\\.(md|markdown)"
+filters = ["markdown"]
+templates = ["default.html"]
+output = "{dir}/{name}/index.html"
+
