@@ -1,4 +1,5 @@
 body {
+    font-family: "Noto Sans";
     color: #c2b9a2;
     background-color: #090909;
 }
@@ -11,6 +12,35 @@ main {
 
     max-width: 800px;
     margin: auto;
+}
+
+header {
+    font-size: 16pt;
+
+    background-color: #1a2022;
+    padding: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.7em;
+    border-radius: 5px;
+
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+}
+
+footer {
+    font-size: 8pt;
+
+    background-color: #1a2022;
+    padding: 1em;
+    padding-top: 0.3em;
+    padding-bottom: 0.5em;
+    border-radius: 5px;
+
+    max-width: 700px;
+    margin: auto;
+    margin-top: 1.0em;
+    text-align: center;
 }
 
 h1, h3 {
@@ -47,7 +77,6 @@ h3 {
 }
 
 p, li {
-    font-family: "Noto Sans";
     font-size: 14pt;
 }
 
@@ -61,7 +90,7 @@ blockquote > p {
 
 a {
     text-decoration: none;
-    font-family: "Raleway";
+    /* font-family: "Raleway"; */
     font-weight: bold;
     font-style: italic;
     color: #525e8c;
