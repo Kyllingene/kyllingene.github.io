@@ -39,7 +39,7 @@ may be executables, so non-Rustaceans can appreciate them too:
 - [Timepiece][6] - A command-line all-purpose timepiece
 - [RSSG][5] - An indev static-site generator - used for this site!
 - [Brim][8] - An optimizing brain* interpreter
-- [AirC][9] - An assembly-like language that compiles to brain*
+- [Airc][9] - An assembly-like language that compiles to brain*
 
 ## Contact
 
