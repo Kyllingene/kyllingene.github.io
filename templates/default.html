@@ -3,15 +3,22 @@
     <head>
         <link rel="stylesheet" href="/style.css" />
         <title>{{ title }}</title>
+
+        <!-- syntax highlighting -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/hybrid.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
         <header>
             <a href="/">Home</a>
         </header>
 
+        <div class="border">
         <main>
             {{ data }}
         </main>
+        </div>
 
         <footer>
             <p> If this site has weird colors, try disabling your dark mode extension. </p>

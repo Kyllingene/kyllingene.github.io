@@ -28,14 +28,13 @@ class Cow: Animal {
 ```
 
 In this example, we create a base `Animal` class from which we derive `Cow`.
-This is probably familiar to you, and should be a good starting point to
-demonstrate how Rust does things differently.
+If you don't recognize this pattern, then this article probably isn't for you.
+For those who do, it should be a good jumping-off point.
 
 *Note:* I find that many people don't grok a technical discussion of the
-differences or how you would do things, so I won't be getting into the weeds
-over why things are how they are, or why you should prefer composition over
-inheritance. This will strictly focus on a practical example of translating one
-to the other.
+differences, so I won't be getting into the weeds over why things are how they
+are, or why you should prefer composition over inheritance. This will strictly
+focus on a practical example of translating one to the other.
 
 There are two main ways you can accomplish different types with a unified
 interface: traits, and enums.
@@ -89,21 +88,21 @@ Note how, just like in C++, you can have default implementations. Since
 
 This method is the closest to inheritance, but it has several flaws:
 - You often end up writing tons of getter/setter methods
-- It forces you to work with Rust's powerful but intricate type system
+- It forces you to work with Rust's powerful but complex type system
     - This can be confusing and verbose, especially for beginners
 - It fights ownership, leading to ugly types like `Box<dyn Animal>`
 
 However, this is the only solution that allows other users to define and use
 their own kinds of `Animal`s. This is what traits are for, and is one of the
-only times when you should use them. For example, a UI framework may expose a
-`UiElement` trait so that users can define their own elements.
+only times when you should use them. An example might be a UI framework that
+exposes a `UiElement` trait so that users can define their own elements.
 
 ## Method 2: Enums
 
-This is usually what you want when you think of inheritance. For example, most
-OOP languages structure things like GUI elements as a tree of inherited classes.
-In Rust, those often get defined as one or more enums, for good reason.  Here's
-the `Animal` example in enum form:
+This is usually what you want when you think you want inheritance. For example,
+most OOP languages structure things like GUI elements as a tree of inherited
+classes.  In Rust, those often get defined as one or more enums, for good
+reason.  Here's the `Animal` example in enum form:
 
 ```rust
 enum Animal {
