@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/style.css" />
+        <title></title>
+
+        <!-- syntax highlighting -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/hybrid.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+
+        <!-- favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+    </head>
+    <body>
+        <header>
+            <a href="/">Home</a>
+        </header>
+
+        <div class="border">
+        <main>
+            <h1 id="howtoreplaceinheritanceinrust">How to Replace Inheritance in Rust</h1>
+
+<p>Many people come to Rust from other programming languages, such as Java or C++.
+In such languages, you become accustomed to using <em>inheritance</em>. An example is
+this:</p>
+
+<pre><code class="cpp">class Animal {
+    public:
+        std::string name;
+        int size;
+        std::string *noises;
+
+    std::string randomNoise() {
+        return this-&gt;noises[0];
+    }
+
+    int sizeOfBaby();
+};
+
+class Cow: Animal {
+    std::string breed;
+
+    int sizeOfBaby() {
+        return 2;
+    }
+};
+</code></pre>
+
+<p>In this example, we create a base <code>Animal</code> class from which we derive <code>Cow</code>.
+If you don&#8217;t recognize this pattern, then this article probably isn&#8217;t for you.
+For those who do, it should be a good jumping-off point.</p>
+
+<p><em>Note:</em> I find that many people don&#8217;t grok a technical discussion of the
+differences, so I won&#8217;t be getting into the weeds over why things are how they
+are, or why you should prefer composition over inheritance. This will strictly
+focus on a practical example of translating one to the other.</p>
+
+<p>There are two main ways you can accomplish different types with a unified
+interface: traits, and enums.</p>
+
+<h2 id="method1:traits">Method 1: Traits</h2>
+
+<p>To start, here&#8217;s a reproduction of <code>Animal</code> in Rust:</p>
+
+<pre><code class="rust">trait Animal {
+    fn name(&amp;self) -&gt; String;
+    fn size(&amp;self) -&gt; u32;
+    fn noises(&amp;self) -&gt; Vec&lt;String&gt;;
+
+    fn random_noise(&amp;self) -&gt; String {
+        return self.noises()[0].clone();
+    }
+
+    fn size_of_baby(&amp;self) -&gt; u32;
+}
+</code></pre>
+
+<p>Wait, what&#8217;s going on here? Why all these functions instead of fields?</p>
+
+<p>Since Rust uses composition rather than inheritance, there&#8217;s no way to specify a
+field on a trait. There simply isn&#8217;t. So in this case, you have to specify a
+bunch of getter methods. If you want to support setting the values as well, you
+have to provide those.</p>
+
+<p>Now, here&#8217;s a translation of <code>Cow</code>:</p>
+
+<pre><code class="rust">struct Cow {
+    name: String,
+    size: u32,
+    noises: Vec&lt;String&gt;,
+    breed: String,
+}
+
+impl Animal for Cow {
+    fn name(&amp;self) -&gt; String { return self.name.clone(); }
+    fn size(&amp;self) -&gt; u32 { return self.size; }
+    fn noises(&amp;self) -&gt; Vec&lt;String&gt; { return self.noises.clone(); }
+    fn size_of_baby(&amp;self) -&gt; u32 { return 2; }
+}
+</code></pre>
+
+<p>Note how, just like in C++, you can have default implementations. Since
+<code>random_noise</code> is implemented in the trait, you don&#8217;t have to implement it on
+<code>Cow</code>. You could, if you wanted, override it, but you don&#8217;t have to.</p>
+
+<p>This method is the closest to inheritance, but it has several flaws:</p>
+
+<ul>
+<li>You often end up writing tons of getter/setter methods</li>
+<li>It forces you to work with Rust&#8217;s powerful but complex type system
+
+<ul>
+<li>This can be confusing and verbose, especially for beginners</li>
+</ul></li>
+<li>It fights ownership, leading to ugly types like <code>Box&lt;dyn Animal&gt;</code></li>
+</ul>
+
+<p>However, this is the only solution that allows other users to define and use
+their own kinds of <code>Animal</code>s. This is what traits are for, and is one of the
+only times when you should use them. An example might be a UI framework that
+exposes a <code>UiElement</code> trait so that users can define their own elements.</p>
+
+<h2 id="method2:enums">Method 2: Enums</h2>
+
+<p>This is usually what you want when you think you want inheritance. For example,
+most OOP languages structure things like GUI elements as a tree of inherited
+classes. In Rust, those often get defined as one or more enums, for good
+reason. Here&#8217;s the <code>Animal</code> example in enum form:</p>
+
+<pre><code class="rust">enum Animal {
+    Cow {
+        name: String,
+        size: u32,
+        noises: Vec&lt;String&gt;,
+        breed: String,
+    }
+}
+
+impl Animal {
+    fn random_noise(&amp;self) -&gt; String {
+        match self {
+            Self::Cow { noises, .. } =&gt; return noises[0].clone(),
+        }
+    }
+
+    fn size_of_baby(&amp;self) -&gt; u32 {
+        match self {
+            Self::Cow { .. } =&gt; return 2,
+        }
+    }
+}
+</code></pre>
+
+<p>Here, we define an enum called <code>Animal</code>. Inside <code>Animal</code> we have a <code>Cow</code>
+variant holding all the necessary information. We then define some methods on
+it, using match statements to tell which kind of <code>Animal</code> we&#8217;re dealing with.</p>
+
+<p>While not perfect, this method has many benefits.</p>
+
+<ul>
+<li>It avoids the ugly type system issues</li>
+<li>It allows you to see exactly what kind of <code>Animal</code> you have
+
+<ul>
+<li>Therefore, you can get more information out of it</li>
+</ul></li>
+</ul>
+
+<p>However, you still haven&#8217;t fixed the getter/setter issue from the first method.
+With both, you end up rewriting boilerplate code just to get or change a field.</p>
+
+<h2 id="bonusmethod3:structenum">Bonus method 3: Struct / Enum</h2>
+
+<p>The above two will often suit your use case, but sometimes you need your
+solution to be more robust and expandable. Nesting an enum with kind-specific
+details inside of a struct may be just what you want:</p>
+
+<pre><code class="rust">struct Animal {
+    kind: AnimalKind,
+    name: String,
+    size: u32,
+    noises: Vec&lt;String&gt;,
+}
+
+impl Animal {
+    fn random_noise(&amp;self) -&gt; String {
+        return self.noises[0].clone();
+    }
+
+    fn size_of_baby(&amp;self) -&gt; u32 {
+        return self.kind.size_of_baby();
+    }
+}
+
+enum AnimalKind {
+    Cow { breed: String }
+}
+
+impl AnimalKind {
+    fn size_of_baby(&amp;self) -&gt; u32 {
+        match self {
+            Self::Cow { .. } =&gt; return 2,
+        }
+    }
+}
+</code></pre>
+
+<p>This is the most flexible solution:</p>
+
+<ul>
+<li>It provides all the information from the original C++ implementation of
+<code>Animal</code> as readily-accessible fields</li>
+<li>You can pass around owned <code>Animal</code>s with ease</li>
+<li>You can extract just the animal-specific data and pass it along</li>
+<li>You circumvent all the inconveniences around traits</li>
+<li>You can easily extend it to add more kinds of animal</li>
+</ul>
+
+<h2 id="summary">Summary</h2>
+
+<p>Traits are very helpful when you need to allow a third party to define their own
+types based off of your work. However, due to type system intricacies, it&#8217;s
+usually far easier to use enums. Additionally, you can put kind-specific details
+in an enum, then put <em>that</em> in a struct, which is the most robust solution.</p>
+
+<p>I chose not to dive deeply into traits for this because that&#8217;s not usually what
+you actually want. Beginners often try to replace inheritance with traits
+because&#8230; well, that&#8217;s the closest thing. But really, Rust enums are far more
+powerful, and usually what you want.</p>
+
+<h2 id="usefullinks">Useful links</h2>
+
+<ul>
+<li><a href="https://wikipedia.org/wiki/Composition_over_inheritance">Composition over Inheritance -
+Wikipedia</a>
+
+<ul>
+<li>A comparison of composition and inheritance</li>
+</ul></li>
+<li><a href="https://riptutorial.com/rust/example/22917/inheritance-with-traits">Inheritance with
+Traits</a>
+
+<ul>
+<li>A short tutorial on how to use traits properly</li>
+</ul></li>
+<li><a href="https://users.rust-lang.org/t/how-to-implement-inheritance-the-rust-way/71373/4">How to implement inheritance the Rust
+way?</a>
+
+<ul>
+<li>A forum question about using traits that shows some of the issues you may
+run into</li>
+</ul></li>
+</ul>
+
+        </main>
+        </div>
+
+        <footer>
+            <p> If this site has weird colors, try disabling your dark mode extension. </p>
+        </footer>
+    </body>
+</html>
